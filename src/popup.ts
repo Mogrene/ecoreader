@@ -34,11 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
   ) as HTMLInputElement
   if (statusCheckbox) {
     browser.storage.sync.get(['status']).then((result) => {
-      statusCheckbox.checked = result.status || true
+      statusCheckbox.checked = result.status || false
     })
 
     statusCheckbox.addEventListener('click', () => {
-      browser.storage.sync.set({ status: !statusCheckbox.checked })
+      browser.storage.sync.set({ status: statusCheckbox.checked })
 
       document.getElementById('switch-label-on')!.style.color =
         statusCheckbox.checked ? 'var(--green)' : 'var(--cold-gray)'
