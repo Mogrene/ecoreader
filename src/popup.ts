@@ -15,6 +15,23 @@ const truncateString = (
   return `${inputString.slice(0, length - 3)}...`
 }
 
+const formatBytes = (bytes: number, decimals = 2): string => {
+  if (bytes === 0) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
+}
+
+browser.storage.local.get({ totalSize: 0 }).then((result) => {
+  const { totalSize } = result
+  document.getElementById('totalSize')!.innerText = formatBytes(totalSize)
+})
+
 document.addEventListener('DOMContentLoaded', () => {
   const reloadIcon = document.getElementById('reloadIcon')
   if (reloadIcon) {
